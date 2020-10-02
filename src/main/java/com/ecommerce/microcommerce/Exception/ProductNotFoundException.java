@@ -1,8 +1,11 @@
 package com.ecommerce.microcommerce.Exception;
 
-public class ProductNotFoundException extends Throwable {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ProductNotFoundException extends RuntimeException {
     public ProductNotFoundException(String s) {
-        s = "No Product Found !!!";
-        System.out.println(s);
+        super(s);
     }
 }

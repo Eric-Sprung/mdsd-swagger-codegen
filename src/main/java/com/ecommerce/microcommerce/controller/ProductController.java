@@ -3,6 +3,8 @@ package com.ecommerce.microcommerce.controller;
 import com.ecommerce.microcommerce.Exception.ProductNotFoundException;
 import com.ecommerce.microcommerce.dao.ProductDao;
 import com.ecommerce.microcommerce.model.Product;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@Api(description = "Product Management")
 @RestController //tells Spring that the methods come from this class
 // Methods that respond to URI of the microservice
 public class ProductController {
@@ -19,22 +22,29 @@ public class ProductController {
     private ProductDao productDao;
 
     //Products
+    @ApiOperation(value = "Get a product by its ID")
     @GetMapping(value = "Products")
-    public List<Product> listProducts(){
+    public List<Product> listProducts() {
         return productDao.findAll();
     }
 
     //Products/{id}
     @GetMapping(value = "Products/{id}")
-    public Product showOneProduct(@PathVariable int id){
-        return productDao.findById(id);
+    public Product showOneProduct(@PathVariable int id) throws ProductNotFoundException {
+
+        Product product = productDao.findById(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product with Id " + id + " does not exist");
+        }
+
+        return product;
     }
 
     @PostMapping(value = "/Products")
-    public ResponseEntity<Void> addProduct(@RequestBody Product product){
+    public ResponseEntity<Void> addProduct(@RequestBody Product product) {
 
         Product productSave = productDao.save(product);
-        if (product == null){
+        if (product == null) {
             return ResponseEntity.noContent().build();
         }
 
@@ -49,8 +59,8 @@ public class ProductController {
     @DeleteMapping(value = "/Products/{id}")
     public void deleteProduct(@PathVariable int id) throws ProductNotFoundException {
         Product product = productDao.deleteById(id);
-        if(product == null){
-            throw new ProductNotFoundException("id" + id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product with Id " + id + " has been deleted");
         }
     }
 
