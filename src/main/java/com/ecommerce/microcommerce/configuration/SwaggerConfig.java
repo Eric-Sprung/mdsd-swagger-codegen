@@ -8,6 +8,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/***
+ * this class is used for restriction in the documentation
+ * it does not show informations we do not need
+ */
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {

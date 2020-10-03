@@ -22,13 +22,14 @@ public class ProductController {
     private ProductDao productDao;
 
     //Products
-    @ApiOperation(value = "Get a product by its ID")
+    @ApiOperation(value = "Get all Products")
     @GetMapping(value = "Products")
     public List<Product> listProducts() {
         return productDao.findAll();
     }
 
     //Products/{id}
+    @ApiOperation(value = "Get a product by its ID")
     @GetMapping(value = "Products/{id}")
     public Product showOneProduct(@PathVariable int id) throws ProductNotFoundException {
 
@@ -40,6 +41,7 @@ public class ProductController {
         return product;
     }
 
+    @ApiOperation(value = "Add a product in the Database")
     @PostMapping(value = "/Products")
     public ResponseEntity<Void> addProduct(@RequestBody Product product) {
 
@@ -56,6 +58,7 @@ public class ProductController {
         return ResponseEntity.created(location).build();
     }
 
+    @ApiOperation(value = "Delete a Product by its ID")
     @DeleteMapping(value = "/Products/{id}")
     public void deleteProduct(@PathVariable int id) throws ProductNotFoundException {
         Product product = productDao.deleteById(id);

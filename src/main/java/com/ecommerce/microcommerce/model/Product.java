@@ -1,7 +1,5 @@
 package com.ecommerce.microcommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,16 +21,15 @@ public class Product {
 
 
     //Constructor
-    public Product(int id, String name, double price, double purchasePrice){
+    public Product(int id, String name, double price, double purchasePrice) {
         this.id = id;
-        this.name= name;
+        this.name = name;
         this.price = price;
         this.purchasePrice = purchasePrice;
     }
 
     //default constructor
-    public Product(){
-
+    public Product() {
     }
 
     public int getId() {
